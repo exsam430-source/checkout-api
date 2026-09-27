@@ -1,0 +1,13 @@
+name: Chainsaw Gate
+on: [pull_request]
+jobs:
+  chainsaw-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Chainsaw
+        run: curl -fsSL https://chain305.com/install.sh | sh
+      - name: Scan PR
+        run: chainsaw pr-scan --base main --head HEAD --strict
